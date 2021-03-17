@@ -25,3 +25,10 @@
 # gender = response.json()["gender"]
 # print(gender)
 
+
+import requests
+blog_url = 'https://api.npoint.io/ed99320662742443cc5b'
+response = requests.get(url=blog_url)
+response.raise_for_status()
+all_blogs = response.json()
+print(all_blogs)

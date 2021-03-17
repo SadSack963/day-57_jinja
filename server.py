@@ -2,12 +2,12 @@ from flask import Flask, render_template
 import random
 # import time
 import datetime as dt
+import requests
 
 app = Flask(__name__)
 
 
 def query_api(url, name):
-    import requests
     query = {'name': name}
     response = requests.get(url=url, params=query)
     response.raise_for_status()
@@ -32,11 +32,15 @@ def guess(name: str):
     return render_template('guess.html', name=name, gender=gender, age=age)
 
 
-@app.route('/blog')
-def blog():
-
-
-    return render_template('blog.html')
+@app.route('/blog/<num>')
+def blog(num):
+    blog_url = 'https://api.npoint.io/ed99320662742443cc5b'
+    response = requests.get(url=blog_url)
+    response.raise_for_status()
+    all_blogs = response.json()
+    print(all_blogs)
+    print(type(num))
+    return render_template('blog.html', blogs=all_blogs, number=int(num))
 
 
 if __name__ == '__main__':
